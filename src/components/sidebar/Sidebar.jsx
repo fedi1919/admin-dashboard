@@ -2,7 +2,6 @@ import "./sidebar.css";
 import {
   LineStyle,
   Timeline,
-  TrendingUp,
   PermIdentity,
   Storefront,
   AttachMoney,
@@ -23,19 +22,11 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
             <Link to="/" className="link">
-            <li className="sidebarListItem active">
-              <LineStyle className="sidebarIcon" />
-              Home
-            </li>
+              <li className="sidebarListItem active">
+                <LineStyle className="sidebarIcon" />
+                Home
+              </li>
             </Link>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Analytics
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
-              Sales
-            </li>
           </ul>
         </div>
         <div className="sidebarMenu">
@@ -44,13 +35,31 @@ export default function Sidebar() {
             <Link to="/users" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
-                Users
+                Utilisateurs
               </li>
             </Link>
             <Link to="/products" className="link">
               <li className="sidebarListItem">
                 <Storefront className="sidebarIcon" />
-                Products
+                Produits
+              </li>
+            </Link>
+            <Link to="/products" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Lignes Productions
+              </li>
+            </Link>
+            <Link to="/products" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                Status
+              </li>
+            </Link>
+            <Link to="/products" className="link">
+              <li className="sidebarListItem">
+                <Storefront className="sidebarIcon" />
+                PickLists
               </li>
             </Link>
             <li className="sidebarListItem">

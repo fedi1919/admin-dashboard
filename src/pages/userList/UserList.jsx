@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -6,8 +8,17 @@ import { useState } from "react";
 import { userRows } from "../../dummyData";
 
 import "./userList.css";
+import { getAllUsers } from "../../redux/users/apiCalls";
 
 export default function UserList() {
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.currentUsers);
+  console.log(users);
+
+  useEffect(() => {
+    getAllUsers(dispatch);
+  }, [dispatch]);
+
   const [data, setData] = useState(userRows);
 
   const handleDelete = (id) => {
@@ -16,28 +27,15 @@ export default function UserList() {
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
-    {
-      field: "user",
-      headerName: "User",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="userListUser">
-            <img className="userListImg" src={params.row.avatar} alt="" />
-            {params.row.username}
-          </div>
-        );
-      },
-    },
     { field: "email", headerName: "Email", width: 200 },
     {
-      field: "status",
-      headerName: "Status",
-      width: 120,
+      field: "matricule",
+      headerName: "Matricule",
+      width: 150,
     },
     {
-      field: "transaction",
-      headerName: "Transaction Volume",
+      field: "isAdmin",
+      headerName: "Is Admin",
       width: 160,
     },
     {
@@ -63,9 +61,10 @@ export default function UserList() {
   return (
     <div className="userList">
       <DataGrid
-        rows={data}
+        rows={users}
         disableSelectionOnClick
         columns={columns}
+        getRowId={(row) => row.id}
         pageSize={8}
         checkboxSelection
       />

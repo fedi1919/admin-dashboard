@@ -1,10 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./product.css";
-import Chart from "../../components/chart/Chart"
-import {productData} from "../../dummyData"
-import { Publish } from "@material-ui/icons";
+
+import FormUpdateProduct from "../../components/FormUpdateProduct/FormUpdateProduct";
 
 export default function Product() {
+  const location = useLocation();
+  const productId = location.pathname.split("/")[2];
+
+  const user = useSelector((state) => state.user.currentUser);
+  let products = useSelector((state) => state.product.products);
+  let product = products.find((element) => element.id == productId);
+
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -13,62 +20,69 @@ export default function Product() {
           <button className="productAddButton">Create</button>
         </Link>
       </div>
+
       <div className="productTop">
-          <div className="productTopLeft">
-              <Chart data={productData} dataKey="Sales" title="Sales Performance"/>
+        <div className="productTopRight">
+          <div>
+            <div className="productInfoTop">
+              <h2 className="productName">All Details</h2>
+            </div>
           </div>
-          <div className="productTopRight">
-              <div className="productInfoTop">
-                  <img src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="productInfoImg" />
-                  <span className="productName">Apple Airpods</span>
+
+          <div className="productInfoBottomContainer">
+            <div className="productInfoBottom">
+              <div className="productInfoItem">
+                <span className="productInfoKey">id:</span>
+                <span className="productInfoValue">{productId}</span>
               </div>
-              <div className="productInfoBottom">
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">id:</span>
-                      <span className="productInfoValue">123</span>
-                  </div>
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">sales:</span>
-                      <span className="productInfoValue">5123</span>
-                  </div>
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">active:</span>
-                      <span className="productInfoValue">yes</span>
-                  </div>
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">in stock:</span>
-                      <span className="productInfoValue">no</span>
-                  </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">code produit:</span>
+                <span className="productInfoValue">{product.codeProduit}</span>
               </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">id type produit:</span>
+                <span className="productInfoValue">
+                  {product.idTypeProduit}
+                </span>
+              </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">seuil:</span>
+                <span className="productInfoValue">{product.seuil}</span>
+              </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">etat:</span>
+                <span className="productInfoValue">true</span>
+              </div>
+            </div>
+
+            <div className="productInfoBottom">
+              <div className="productInfoItem">
+                <span className="productInfoKey">designation:</span>
+                <span className="productInfoValue">{product.designation}</span>
+              </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">preparateur:</span>
+                <span className="productInfoValue">{product.preparateur}</span>
+              </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">hostname:</span>
+                <span className="productInfoValue">{product.hostname}</span>
+              </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">date creation:</span>
+                <span className="productInfoValue">{product.dateCreation}</span>
+              </div>
+              <div className="productInfoItem">
+                <span className="productInfoKey">date maj:</span>
+                <span className="productInfoValue">{product.dateMaj}</span>
+              </div>
+            </div>
           </div>
+        </div>
       </div>
+
       <div className="productBottom">
-          <form className="productForm">
-              <div className="productFormLeft">
-                  <label>Product Name</label>
-                  <input type="text" placeholder="Apple AirPod" />
-                  <label>In Stock</label>
-                  <select name="inStock" id="idStock">
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                  </select>
-                  <label>Active</label>
-                  <select name="active" id="active">
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                  </select>
-              </div>
-              <div className="productFormRight">
-                  <div className="productUpload">
-                      <img src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="productUploadImg" />
-                      <label for="file">
-                          <Publish/>
-                      </label>
-                      <input type="file" id="file" style={{display:"none"}} />
-                  </div>
-                  <button className="productButton">Update</button>
-              </div>
-          </form>
+        <FormUpdateProduct product={product} />
       </div>
     </div>
   );
